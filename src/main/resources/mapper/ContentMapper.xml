@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.site.dao.ContentMapper">
+
+    <sql id="BASE_TABLE">
+        contents
+    </sql>
+    
+    <!-- 文章的基本列 -->
+    <sql id="BASE_COLUMN">
+        c.cid, c.title, c.titlePic, c.modified, c.created, c.content, c.authorId,
+        c.type, c.status, c.commentsNum, c.categories, c.allowComment,
+        c.allowPing,
+    </sql>
+    
+    <insert id="addArticle" parameterType="Content" useGeneratedKeys="true" keyProperty="cid">
+        insert into contents (title, titlePic,content, created,authorId, type, status, categories, allowComment, allowPing)
+        values (
+                #{title},#{titlePic},#{content},UNIX_TIMESTAMP(NOW()),#{authorId},#{type},#{status},
+                #{categories},#{allowComment},#{allowPing,jdbcType=INTEGER}
+               )
+    </insert>
+
+<!--    根据主键编号获取文章信息-->
+    <select id="getArticleById" resultType="com.learn.site.pojo.Content">
+        select *
+        from <include refid="BASE_TABLE"></include> as c
+        where c.cid = #{cid, jdbcType=INTEGER}
+    </select>
+
+    <select id="getArticlesByCond" resultType="com.learn.site.pojo.Content" parameterType="com.learn.site.dto.cond.ContentCond">
+        select *
+        from <include refid="BASE_TABLE"></include> AS c
+        <where>
+            <if test="category != null">
+                and c.categories like concat('%',#{category},'%')
+            </if>
+            <if test="status != null">
+                and c.status like concat('%',#{category},'%')
+            </if>
+            <if test="title != null">
+                and c.title like concat('%',#{title},'%')
+            </if>
+            <if test="content != null">
+                and c.content like concat('%',#{content},'%')
+            </if>
+            <if test="type != null">
+                and c.type like concat('%',#{type},'%')
+            </if>
+            <if test="startTime != null">
+                AND c.created &gt;= #{startTime, jdbcType=INTEGER}
+            </if>
+            <if test="endTime != null">
+                AND c.created &lt;= #{endTime, jdbcType=INTEGER}
+            </if>
+        </where>
+        order by c.created DESC
+
+    </select>
+
+
+<!--    更新文章信息-->
+    <update id="updateArticleById" parameterType="com.learn.site.pojo.Content">
+        update <include refid="BASE_TABLE"></include>
+        <set>
+            <if test="title != null">
+                title = #{title, jdbcType=VARCHAR},
+            </if>
+            <if test="titlePic != null">
+                titlePic = #{titlePic, jdbcType=VARCHAR},
+            </if>
+
+            modified = UNIX_TIMESTAMP(NOW()),
+
+            <if test="content != null">
+                content = #{content, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=VARCHAR},
+            </if>
+
+            <if test="categories != null">
+                categories = #{categories, jdbcType=VARCHAR},
+            </if>
+
+            <if test="commentsNum != null">
+                commentsNum = #{commentsNum, jdbcType=INTEGER},
+            </if>
+            <if test="allowComment != null">
+                allowComment = #{allowComment, jdbcType=INTEGER},
+            </if>
+
+        </set>
+        where cid = #{cid, jdbcType=INTEGER}
+    </update>
+
+<!--    删除文章-->
+    <delete id="deleteArticleById" parameterType="INTEGER">
+        delete from <include refid="BASE_TABLE"></include>
+        where cid = #{cid, jdbcType=INTEGER}
+    </delete>
+
+    <insert id="updateArticleLikes" parameterType="INTEGER">
+        update <include refid="BASE_TABLE"></include>
+        set likes=likes+1 where cid=#{cid}
+    </insert>
+</mapper>

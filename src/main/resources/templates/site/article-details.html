@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- google fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
+    <!-- end google fonts -->
+    <link th:href="@{/site/css/styles.css}" rel="stylesheet" type="text/css" media="all" />
+    <!--    使用搜狐接口-->
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <style>
+        .post-content div{
+            margin: auto;
+            /*border: 5px solid gray;*/
+            width: 70%;
+        }
+        .content div{
+            text-align: center;
+        }
+
+        #thumb img{
+            width: 40px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body onload="load(); show_likes()">
+<!-- start header -->
+<div class="header_bg">
+    <div class="wrap">
+        <div class="wrapper">
+            <div class="header">
+                <div th:replace="site/indexHead::indexHead"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="post-content" class="post-content" itemprop="articleBody">
+    <div>
+        <h3 th:text="${article.title}"></h3>
+<!--        <p style="display:None">-->
+<!--        <th:block th:text="${T(com.learn.site.utils.Commons).article(article.content)}" ></th:block>-->
+<!--        </p>-->
+        <th:block th:utext="${content}"></th:block>
+
+    </div>
+    <div th:id="thumb" onclick="thumbs_up()" >
+        <img src="/site/images/like_black.png"> <span th:id="likesNum"></span>
+    </div>
+
+<!--    评论区-->
+    <hr>
+
+    <div class="userContent">
+        <h3>评论区</h3>
+        <hr>
+    </div>
+    <hr>
+    <div>
+<!--        发表评论-->
+        <div class="content">
+            <div class="table-form">
+                <h3>Leave a Comment</h3>
+                <form th:id="commentForm">
+                    <input hidden="hidden" id="article_id" th:value="${article.cid}">
+                    <input th:id="username" style="margin-left: 65px" type="text" class="textbox" value="Name:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}">
+                    <textarea id="commentText" value="Message:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">Message:</textarea>
+                </form>
+                <button onclick="comment()">留言</button>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<!-- start footer -->
+<div th:replace="site/indexFooter::indexFooter"></div>
+<script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js}"></script>
+<script>
+<!--    评论区-->
+    function load(){
+        $.ajax({
+            url: '/comment/getComment',
+            data: {cid: $('#article_id').val()},
+            type: 'post',
+            success: function (result){
+                if(result && result.code=='success'){
+                    console.log(result);
+                    // 数据渲染
+                    var arr = result.data;
+                    console.log(arr);
+                    $.each(arr, function (i,t){
+                        var str = '<p>'+t.username+' : '+'<span>'+t.contents+'</span>'+'</p>'+'<hr>';
+                        $(".userContent").append(str);
+                    })
+                }
+            }
+        })
+    }
+
+    // 评论
+    function comment(){
+        var article_id = $('#article_id').val();
+        var username = $('#username').val();
+        var comment = $('#commentText').val();
+        $.post({
+            url: '/comment/commit',
+            data: {
+                cid:article_id,
+                username: username,
+                comment: comment
+            },
+            success: function (result) {
+                console.log(this.data);
+                if(result && result.code=='success'){
+                    alert("留言成功");
+                    // 清空commentContent,回调onload
+                    $('.userContent').empty();
+                    load();
+                }else {
+                    alert("参数非法");
+                }
+                // 清空表单
+                $("#commentForm")[0].reset();
+            }
+        })
+    }
+
+    // 点赞
+    function thumbs_up(){
+        //获取客户端外网ip
+        console.log(returnCitySN["cip"]);
+        var ip = returnCitySN["cip"];
+        var cid = $('#article_id').val();
+        //点击改变颜色,ajax回调
+        $.ajax({
+            url: "/stars/",
+            data: {ip:ip,cid:cid},
+            type: "post",
+            success: function (result){
+                console.log(result);
+                console.log(result.data);
+
+                if(result && result.code=='success'){
+                    // console.log(result);
+                    // 图标变换，回调显示点赞数
+                    show_likes();
+                }else {
+                    alert(result.data || "已经点赞过");
+                }
+            }
+
+        })
+
+    }
+
+    //展示点赞数
+    function show_likes(){
+        $.ajax({
+            url: "/stars/showLikes",
+            data: {cid:$('#article_id').val()},
+            type: 'post',
+            success: function (result){
+                //显示点赞数
+                if(result && result.code=='success'){
+                    console.log(result.data);
+                    $('#likesNum').html(result.data);
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

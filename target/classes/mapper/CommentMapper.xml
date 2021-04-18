@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learn.site.dao.CommentMapper">
+
+    <sql id="BASE_TABLE">
+        comment
+    </sql>
+
+    <insert id="addComment" parameterType="com.learn.site.pojo.Comment" useGeneratedKeys="true" keyProperty="ccid">
+        insert into <include refid="BASE_TABLE"></include>
+        (username, cid, contents, created)
+        values(#{username},#{cid},#{contents},UNIX_TIMESTAMP(NOW()))
+    </insert>
+
+
+
+    <select id="getComment" parameterType="Integer" resultType="Comment">
+        select c.username, c.contents, c.created
+        from <include refid="BASE_TABLE"></include> as c
+        where c.cid = #{cid}
+        order by c.created DESC
+    </select>
+
+    <select id="getAllComment" resultType="Comment">
+        select c.ccid, c.username, c.cid, c.contents, c.created
+        from <include refid="BASE_TABLE"></include> as c
+        order by c.created DESC
+    </select>
+
+    <delete id="delComment" parameterType="Integer">
+        delete from <include refid="BASE_TABLE"></include>
+        where ccid=#{ccid}
+    </delete>
+
+    <delete id="delAllComment" parameterType="Integer">
+        delete from <include refid="BASE_TABLE"></include>
+        where cid=#{cid}
+    </delete>
+</mapper>

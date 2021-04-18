@@ -1,0 +1,93 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>The Classic Website Template | Home :: w3layouts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- google fonts-->
+<link href='http://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
+<!-- end google fonts -->
+<link th:href="@{/site/css/styles.css}" rel="stylesheet" type="text/css" media="all" />
+	<style>
+		ul.pagination {
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+		}
+
+		ul.pagination li {display: inline;}
+
+		ul.pagination li a {
+			color: black;
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+		}
+		ul.pagination li a.active {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+		ul.pagination span{
+			float: left;
+			padding: 8px 16px;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+<!-- start header -->
+<div class="header_bg">
+<div class="wrap">
+<div class="wrapper">
+	<div class="header">
+		<div th:replace="site/indexHead::indexHead"></div>
+		<div class="clear"></div>
+	</div>
+</div>
+</div>
+</div>
+
+<!-- start main -->
+<div class="wrap">
+<div class="wrapper">
+	<div class="main">
+<!--		<th:block th:each="post : ${articles.list}">-->
+		<th:block th:each="post : ${articles.list}">
+			<div class="content">
+				<div class="list_img">
+					<img th:src="${post.titlePic}">
+				</div>
+				<h2 class="style list"><a href="#" th:text="${post.title}" th:href="'/blog/article/'+${post.cid}"></a></h2>
+				<h3 class="style" th:text="${T(com.learn.site.utils.Commons).fmtdate(post.created,'yyyy-MM-dd HH:mm')}"></h3>
+
+<!--				<a href="blog.html" class="btn">Read More</a>-->
+			</div>
+		</th:block>
+
+<!--		分页-->
+		<div >
+			<ul class="pagination">
+				<th:block th:each="nav : ${articles.navigatepageNums}">
+					<li th:class="${nav==articles.pageNum}" id="page"><a th:href="@{'/blog/index/'+${nav}}"  th:text="${nav}"></a></li>
+				</th:block>
+
+				<li> <span  th:text="'共'+${articles.pages}+'页'" id="sumPage"></span> </li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+<!-- start footer -->
+<div th:replace="site/indexFooter::indexFooter"></div>
+
+</body>
+</html>

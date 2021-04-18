@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="indexHead">
+<div class="cssmenu">
+    <ul>
+        <li  class="active"><a class="home" href="#"></a></li>
+
+        <li><a th:href="@{/blog/about}">About</a></li>
+        <li><a th:href="@{/blog/index}">Blog</a></li>
+        <!--				<li><a href="inspiration.html">Inspiration</a></li>-->
+        <li><a th:href="@{/blog/contact}">Contact Me</a></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+</div>
+</body>
+</html>

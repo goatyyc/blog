@@ -1,0 +1,102 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>The Classic Website Template | About :: w3layouts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- google fonts-->
+<link href='http://fonts.googleapis.com/css?family=Merriweather+Sans' rel='stylesheet' type='text/css'>
+<!-- end google fonts -->
+<link th:href="@{/site/css/styles.css}" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+<!-- start header -->
+<div class="header_bg">
+<div class="wrap">
+<div class="wrapper">
+	<div class="header">
+		<div th:replace="site/indexHead::indexHead"></div>
+
+		<div class="clear"></div>
+	</div>
+</div>
+</div>
+</div>
+<!-- start main -->
+<div class="wrap">
+<div class="wrapper">
+	<div class="main">	
+		<div class="content">
+		    <h2 class="style list"><a href="#">welcome to my blog </a></h2>
+			<p class="para top1">
+				这是参照github上一个博客练手springboot的博客网站
+			</p>
+			<p class="para top">
+				原项目地址：<a href="https://github.com/zhisheng17/blog">https://github.com/zhisheng17/blog</a>
+				该项目用的springboot为2.0.x release，这个博客年代比较”久远“，上一次update已经是四年前了，虽然但是，整个项目拉到本地后跑起来依旧感到
+				很丝滑，项目的stars挺多是有理由的，写的非常工整规范，非常适合练手。
+			</p>
+			<p class="para top">
+				本次二次开发的版本为springboot2.4.4稳定版，目前完成后台部分功能（包括登录、文章和分类的CRUD）。
+				前台代码采用了另一个模板，开发进度：前台文章列表、关于我、文章详情页（进行中）
+			</p>
+
+		</div>
+<!--		<div class="content">-->
+<!--			<h2 class="style list"><a href="#">Meat our team!</a></h2>-->
+<!--			<div class="span3">-->
+<!--				<div class="span1_of_3">-->
+<!--					<a href=""><img src="./images/pic4.jpg" alt=""/></a>-->
+<!--					<h4 class="style top1"><a href="">Kimberly Thompson</a></h4>-->
+<!--					<h5 class="style">Founder & CEO</h5>-->
+<!--					<p class="para">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,</p>-->
+<!--				</div>	-->
+<!--				<div class="span1_of_3">-->
+<!--					<a href=""><img src="./images/pic5.jpg" alt=""/></a>-->
+<!--					<h4 class="style top1"><a href="">Rico Masi</a></h4>-->
+<!--					<h5 class="style">Code Master</h5>-->
+<!--					<p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's,</p>-->
+<!--				</div>	-->
+<!--				<div class="span1_of_3">-->
+<!--					<a href=""><img src="./images/pic6.jpg" alt=""/></a>-->
+<!--					<h4 class="style top1"><a href="">Uku Mason</a></h4>-->
+<!--					<h5 class="style">Market Expert</h5>-->
+<!--					<p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form,</p>-->
+<!--				</div>			-->
+<!--			</div>-->
+<!--			<div class="clear"></div>-->
+<!--			<div class="span2">-->
+<!--				<div class="span1_of_2">-->
+<!--					<a href=""><img src="./images/pic7.jpg" alt=""/></a>-->
+<!--					<h4 class="style top1"><a href="">Blaze Robar</a></h4>-->
+<!--					<h5 class="style">Design Guru</h5>-->
+<!--					<p class="para">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,</p>-->
+<!--				</div>	-->
+<!--				<div class="span1_of_2">-->
+<!--					<a href=""><img src="./images/pic8.jpg" alt=""/></a>-->
+<!--					<h4 class="style top1"><a href="">Jami Adams</a></h4>-->
+<!--					<h5 class="style">Assistent</h5>-->
+<!--					<p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's,</p>-->
+<!--				</div>	-->
+<!--				<div class="clear"></div>-->
+<!--			</div>-->
+<!--			<div class="clear"></div>-->
+<!--		</div>-->
+
+		<div>
+			<img th:src="@{/site/images/jkgirl.gif}" alt="">
+		</div>
+	</div>
+</div>
+</div>
+<!-- start footer -->
+<div th:replace="site/indexFooter::indexFooter"></div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.site.dao.StarsMapper">
+    <sql id="BASE_TABLE">
+        stars
+    </sql>
+
+    <insert id="addStarsById" parameterType="Stars"  useGeneratedKeys="true" keyProperty="sid">
+        insert into <include refid="BASE_TABLE"></include>
+        (ip,cid,created)
+        values (#{ip},#{cid},UNIX_TIMESTAMP(NOW()))
+    </insert>
+
+    <select id="isExist" parameterType="Stars" resultType="java.lang.Boolean">
+        select count(*) from <include refid="BASE_TABLE"></include> as s
+        where s.cid=#{cid} and s.ip=#{ip}
+    </select>
+
+    <select id="queryLikes" parameterType="Integer" resultType="com.learn.site.pojo.Content">
+        select * from contents as c
+        where c.cid=#{cid}
+    </select>
+</mapper>

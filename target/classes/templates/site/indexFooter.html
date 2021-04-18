@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="indexFooter">
+<div class="wrap">
+    <div class="footer">
+        <div class="foot_nav">
+            <ul>
+                <li><a href="#">about</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="foot_soc">
+            <ul>
+                <li><a class="icon1" href="#"></a></li>
+                <li><a  class="icon2" href="#"></a></li>
+                <li><a  class="icon3" href="#"></a></li>
+                <li><a  class="icon4" href="#"></a></li>
+                <div class="clear"></div>
+            </ul>
+        </div>
+        <div class="copy">
+            <p class="w3-link"> © Copyright 2013 Designer First.Com. Template by&nbsp; <a href="http://w3layouts.com/"> W3Layouts</a></p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</div>
+<script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:src="@{//cdn.bootcss.com/limonte-sweetalert2/6.4.1/sweetalert2.min.js}"></script>
+<script th:src="@{/admin/js/jquery.app.js}"></script>
+<script th:src="@{/admin/js/base.js}"></script>
+</body>
+</html>

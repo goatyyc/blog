@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<title>登录</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/admin/css/index.css}" />
+	<script th:src="@{//cdn.bootcss.com/jquery/2.2.3/jquery.min.js}"></script>
+</head>
+
+<body>
+
+<img class="bgone" th:src="@{/admin/img/1.jpg}" />
+<img class="pic" th:src="@{/admin/img/a.png}" />
+
+<div class="table">
+	<div class="wel">某某系统后台登录</div>
+	<div class="wel1">MOU MOU XI TONG HUO TAI DENG LU</div>
+	<form id="loginForm">
+	<div class="user">
+		<div th:name="username" style=""><img th:src="@{/admin/img/yhm.png}" /></div>
+		<input type="text" name="username" placeholder="用户名" />
+	</div>
+	<div class="password">
+		<div id="yonghu"><img th:src="@{/admin/img/mm.png}" /></div>
+		<input type="password" name="pwd" placeholder="●●●●●●"/>
+	</div>
+	<input class="btn" type="button" name="登录" value="登录" onclick="login()"/>
+
+	</form>
+</div>
+
+<script>
+	function login(){
+		$.post({
+			url: '/admin/login',
+			data: $("#loginForm").serialize(),
+			success: function (result){
+				console.log(result)
+				if(result && result.code=='success'){
+					window.location.href = '/admin/index';
+				}else {
+					alert("登录失败");
+				}
+			}
+		})
+	}
+</script>
+</body>
+</html>
