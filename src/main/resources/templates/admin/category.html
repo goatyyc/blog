@@ -137,6 +137,7 @@
                     success: function (result) {
                         if (result && result.code == 'success') {
                             tale.alertOkAndReload('删除成功');
+                            //回调显示 --这里有bug
                         } else {
                             tale.alertError(result.msg || '删除失败');
                         }
